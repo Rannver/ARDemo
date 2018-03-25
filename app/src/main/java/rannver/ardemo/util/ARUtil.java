@@ -47,12 +47,14 @@ public class ARUtil {
     private int rotation = 0;
     private Vec4I viewport = new Vec4I(0, 0, 1280, 720);
     private RenderDataBean renderDataBean;
+    private String flag;
 
-    public ARUtil(Context context,PlyModel model)
+    public ARUtil(Context context,PlyModel model,String flag)
     {
         trackers = new ArrayList<ImageTracker>();
         this.context = context;
         this.model = model;
+        this.flag = flag;
     }
 
     private void loadFromImage(ImageTracker tracker, String path)

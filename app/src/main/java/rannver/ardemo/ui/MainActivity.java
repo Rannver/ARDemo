@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.easyar.Engine;
 import rannver.ardemo.R;
+import rannver.ardemo.model.ModelGLView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String key = "gjWuewAzkutlvqSyu23DCl5tzd5QeUSb29gQTBEHicQtDXhV0cq0hJidkQEyxHeWKpQmcDUHZG0Wx73gKiQuxZ7g7dEV7GOxEW2mtprAHx0Df3WxGAWUL0jeOYrgs68AjTm8hfpmXEiMcYufRYsIgEnmoj28OZzusqaJicjt1NAE30xF3Zp6H7CWgjnyyWiIMiUF9xyg";
     private GLView glView;
+    private ModelGLView modelGLView;
     private String plyName = "test.ply";
+    private String plyPath = "/storage/emulated/0/plymodel/test.ply";
     private String flag;
 
     @Override
@@ -56,7 +59,11 @@ public class MainActivity extends AppCompatActivity {
         requestCameraPermission(new PermissionCallback() {
             @Override
             public void onSuccess() {
-                ((ViewGroup) findViewById(R.id.preview)).addView(glView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                if (flag.equals("model2")){
+                    ((ViewGroup) findViewById(R.id.preview)).addView(modelGLView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                }else{
+                    ((ViewGroup) findViewById(R.id.preview)).addView(glView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                }
             }
 
             @Override
@@ -72,11 +79,14 @@ public class MainActivity extends AppCompatActivity {
             flag = intent.getStringExtra("flag");
         }
 
-        if (flag != null) {
-            glView = new GLView(this, plyName, flag);
+        if (flag != null&&(!flag.equals("model2"))) {
+            glView = new GLView(this, plyPath, flag);
+        }
+        if (flag .equals("model2")) {
+            modelGLView = new ModelGLView(this,plyPath);
         }
 
-        if (flag .equals("ar")) {
+        if (flag .equals("ar")||flag.equals("model2")) {
             btuStart.setVisibility(View.GONE);
         }
     }
@@ -152,12 +162,18 @@ public class MainActivity extends AppCompatActivity {
         if (glView != null) {
             glView.onResume();
         }
+        if (modelGLView!=null){
+            modelGLView.onResume();
+        }
     }
 
     @Override
     protected void onPause() {
         if (glView != null) {
             glView.onPause();
+        }
+        if (modelGLView!=null){
+            modelGLView.onPause();
         }
         super.onPause();
     }

@@ -8,13 +8,13 @@ import javax.microedition.khronos.egl.EGLDisplay;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import cn.easyar.Engine;
-import rannver.ardemo.model2.ModelRender2;
-import rannver.ardemo.model2.ModelUtil2;
-import rannver.ardemo.model2.PlyModel2;
+
 import rannver.ardemo.util.ARRender;
 import rannver.ardemo.util.ARUtil;
 import rannver.ardemo.util.ModelRender;
@@ -29,14 +29,13 @@ public class GLView extends GLSurfaceView
 
     private ARUtil arUtil;
     private ModelUtil modelUtil;
-    private ModelUtil2 modelUtil2;
 
     private Context context;
     private String flag;
 
-    private static final String FLAG_GLVIEW_AR = "ar";
-    private static final String FLAG_GLVIEW_MODEL = "model";
-    private static final String FLAG_GLVIEW_MODEL2 = "model2";
+    public static final String FLAG_GLVIEW_AR = "ar";
+    public static final String FLAG_GLVIEW_MODEL = "model";
+    public static final String FLAG_GLVIEW_MODEL2 = "model2";
 
     public GLView(Context context,String plyName,String flag)
     {
@@ -45,27 +44,25 @@ public class GLView extends GLSurfaceView
         this.context = context;
         this.flag = flag;
         PlyModel model = loadSampleModel(plyName);
-        PlyModel2 model2 = loadSampleModel2(plyName);
 
         setEGLContextFactory(new ContextFactory());
         setEGLConfigChooser(new ConfigChooser());
 
         switch (flag){
             case FLAG_GLVIEW_AR:
-                arUtil = new ARUtil(context,model);
+                arUtil = new ARUtil(context,model,flag);
                 this.setRenderer(new ARRender(context,model,arUtil));
                 break;
             case FLAG_GLVIEW_MODEL:
                 //只加载模型(HelloARSLAM方式)
                 modelUtil = new ModelUtil(context,model);
                 this.setRenderer(new ModelRender(context,model,modelUtil));
+
                 break;
             case FLAG_GLVIEW_MODEL2:
                 //只加载模型（opengles加载附加监听事件）
-//                modelUtil2 = new ModelUtil2(context,model2);
-//                this.setRenderer(new ModelRender2(context,model2,modelUtil2));
-                modelUtil = new ModelUtil(context,model);
-                this.setRenderer(new ModelRender(context,model,modelUtil));
+                arUtil = new ARUtil(context,model,flag);
+                this.setRenderer(new ARRender(context,model,arUtil));
                 break;
         }
 
@@ -207,23 +204,11 @@ public class GLView extends GLSurfaceView
     private PlyModel loadSampleModel(String plyName) {
         PlyModel plyModel;
         try {
-            InputStream stream = getApplicationContext().getAssets()
-                    .open(plyName);
-            plyModel = new PlyModel(stream,context);
-            stream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            plyModel = null;
-        }
-        return plyModel;
-    }
-    private PlyModel2 loadSampleModel2(String plyName) {
-        PlyModel2 plyModel;
-        try {
-            InputStream stream = getApplicationContext().getAssets()
-                    .open(plyName);
-            plyModel = new PlyModel2(stream,context);
-            stream.close();
+//            InputStream stream = getApplicationContext().getAssets()
+//                    .open(plyName);
+            InputStream inputStream = new FileInputStream(new File(plyName));
+            plyModel = new PlyModel(inputStream,context);
+            inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
             plyModel = null;

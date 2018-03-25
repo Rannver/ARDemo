@@ -22,7 +22,7 @@ import rannver.ardemo.MyApplication;
 
 public class InitialUtil {
 
-    private Context context;
+    private static Context context;
 
     public  InitialUtil (Context context){
         this.context = context;
@@ -81,4 +81,13 @@ public class InitialUtil {
             e.printStackTrace();
         }
     }
+
+    public static float pxToDp(float px) {
+        return px / getDensityScalar();
+    }
+
+    private static float getDensityScalar() {
+        return context.getResources().getDisplayMetrics().density;
+    }
+
 }
