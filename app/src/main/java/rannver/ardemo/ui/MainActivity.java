@@ -130,14 +130,6 @@ public class MainActivity extends AppCompatActivity {
         List<String> permissionList = new ArrayList<>();
 
         if (Build.VERSION.SDK_INT >= 23) {
-//            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                int requestCode = permissionRequestCodeSerial;
-//                permissionRequestCodeSerial += 1;
-//                permissionCallbacks.put(requestCode, callback);
-//                requestPermissions(permissions, requestCode);
-//            } else {
-//                callback.onSuccess();
-//            }
             for (int i = 0;i< permissions.length;i++){
                 if (checkSelfPermission(permissions[i])!= PackageManager.PERMISSION_GRANTED){
                     permissionList.add(permissions[i]);
