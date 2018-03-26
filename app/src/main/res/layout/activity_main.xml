@@ -17,15 +17,14 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/btu_camera"
-            app:backgroundTint="@color/transparent"
             android:layout_alignParentBottom="true"
-            app:fabSize="normal"
-            app:borderWidth="0dp"
             android:src="@drawable/ic_camera"
+            android:background="@drawable/btu_shape"
+
             />
         </LinearLayout>
 
@@ -37,15 +36,14 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/btu_start"
-            app:backgroundTint="@color/transparent"
             android:layout_alignParentBottom="true"
-            app:fabSize="mini"
-            app:borderWidth="0dp"
             android:src="@drawable/ic_start"
+            android:background="@drawable/btu_shape"
+
             />
     </LinearLayout>
     <LinearLayout
@@ -56,18 +54,17 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <android.support.design.widget.FloatingActionButton
+        <ImageButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/btu_end"
-            app:backgroundTint="@color/transparent"
             android:layout_alignParentBottom="true"
-            app:fabSize="mini"
-            app:borderWidth="0dp"
             android:src="@drawable/ic_end"
             android:visibility="gone"
+            android:background="@drawable/btu_shape"
 
             />
+
     </LinearLayout>
 
 
